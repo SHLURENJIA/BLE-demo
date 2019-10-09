@@ -18,13 +18,12 @@ import android.widget.Toast;
 import com.shawn.bledemo.adapter.DevicesAdapter;
 import com.shawn.bledemo.bleutil.OnSearchDevicesListener;
 import com.shawn.bledemo.entity.BleDevice;
-import com.tbruyelle.rxpermissions2.RxPermissions;
 
 public class MainActivity extends BaseActivity implements DevicesAdapter.OnDeviceClickListener, OnSearchDevicesListener {
 
 
     private RecyclerView mRvDevice;
-    private final RxPermissions mRxPermission = new RxPermissions(this);
+
     private DevicesAdapter mAdapter;
     private TextView mTvSearch;
 
