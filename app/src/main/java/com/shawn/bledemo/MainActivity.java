@@ -21,6 +21,8 @@ import com.shawn.bledemo.entity.BleDevice;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 public class MainActivity extends BaseActivity implements DevicesAdapter.OnDeviceClickListener, OnSearchDevicesListener {
+
+
     private RecyclerView mRvDevice;
     private final RxPermissions mRxPermission = new RxPermissions(this);
     private DevicesAdapter mAdapter;
@@ -94,10 +96,15 @@ public class MainActivity extends BaseActivity implements DevicesAdapter.OnDevic
     }
 
     @Override
-    public void onDeviceClick(BleDevice device) {
-        mBleManager.scanLeDevice(false);
+    protected void connected() {
         Intent intent = new Intent(this, DataAlternatelyActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onDeviceClick(BleDevice device) {
+        mBleManager.scanLeDevice(false);
+        mBleManager.connectGatt(device.getAddress());
     }
 
     @Override

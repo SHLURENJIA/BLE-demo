@@ -1,10 +1,10 @@
 package com.shawn.bledemo;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
+import android.widget.Toast;
 
 import com.shawn.bledemo.bleutil.BLEManager;
 import com.shawn.bledemo.bleutil.OnBleStateListener;
@@ -18,6 +18,13 @@ import java.util.List;
  * 修改备注：
  */
 public abstract class BaseActivity extends AppCompatActivity implements OnBleStateListener {
+    //打开串口UUID
+    public static final String UUID_SERVICE_SERIAL = "ffe0";
+    public static final String UUID_CHARACTERISTIC_SERIAL = "ffe4";
+    //数据交互UUID
+    public static final String UUID_SERVICE_BLE = "ffe5";
+    public static final String UUID_CHARACTERISTIC_BLE = "ffe9";
+
     private static List<AppCompatActivity> mActivityList = new ArrayList<>();
     protected String TAG = this.getClass().getSimpleName();
 
@@ -46,6 +53,11 @@ public abstract class BaseActivity extends AppCompatActivity implements OnBleSta
 
     protected abstract void initListener();
 
+    /**
+     * 连接成功，发现服务。连接结束。
+     */
+    protected abstract void connected();
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -54,45 +66,36 @@ public abstract class BaseActivity extends AppCompatActivity implements OnBleSta
 
     @Override
     public void onDisconnected() {
-        if (!((Activity) this).isFinishing()) {
-
-            mBleManager.reconnect();
-        }
+        Toast.makeText(this, "重连中", Toast.LENGTH_SHORT).show();
+        mBleManager.reconnect();
     }
 
     @Override
     public void onConnecting() {
-        if (!((Activity) this).isFinishing()) {
-
-        }
+        Toast.makeText(this, "正在连接", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onConnected() {
-        if (!((Activity) this).isFinishing()) {
-
-        }
+        Toast.makeText(this, "连接服务", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onServiceDiscovered() {
-        if (!((Activity) this).isFinishing()) {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            //打开通知
-//            mBleManager.setNotification(CJYConstant.UUID_SERVICE_SERIAL, CJYConstant.UUID_CHARACTERISTIC_SERIAL, true);
-
+        Toast.makeText(this, "连接完成", Toast.LENGTH_SHORT).show();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+        //打开通知
+        mBleManager.setNotification(UUID_SERVICE_SERIAL, UUID_CHARACTERISTIC_SERIAL, true);
+        connected();
     }
 
     @Override
     public void onBleClose() {
-        if (!((Activity) this).isFinishing()) {
 
-        }
     }
 
     @Override
