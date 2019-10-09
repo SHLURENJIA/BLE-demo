@@ -1,4 +1,4 @@
-package com.zhd.intelligentcollector.ble;
+package com.shawn.bledemo.bleutil;
 
 import android.app.Service;
 import android.bluetooth.BluetoothDevice;
@@ -16,8 +16,6 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
 import android.util.Log;
-
-import com.zhd.intelligentcollector.utils.Tools;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -114,7 +112,6 @@ public class BleService extends Service {
 
         @Override
         public void onCharacteristicWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
-            Log.d(TAG, "onCharacteristicWrite: " + Tools.byte2Hex(characteristic.getValue()));
             boolean b = status == BluetoothGatt.GATT_SUCCESS;
             Log.d(TAG, "onCharacteristicWrite: " + b);
         }

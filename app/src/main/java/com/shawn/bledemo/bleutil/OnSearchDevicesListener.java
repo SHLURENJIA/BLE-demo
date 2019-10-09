@@ -7,6 +7,6 @@ import android.bluetooth.BluetoothDevice;
  * 描述: 搜索蓝牙设备返回监听
  * 修改备注:
  */
-public interface OnSearchDeviceListener {
+public interface OnSearchDevicesListener {
     void onNewDeviceFound(BluetoothDevice device, int rssi);
 }

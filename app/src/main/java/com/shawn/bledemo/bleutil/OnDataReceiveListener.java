@@ -6,4 +6,8 @@ package com.shawn.bledemo.bleutil;
  * 修改备注:
  */
 public interface OnDataReceiveListener {
+
+    void onDataReceive(byte[] data);
+
+    void onReceiveFail(String msg);
 }
